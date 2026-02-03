@@ -386,7 +386,19 @@ class Fs extends FlysystemFs
                 $credentials->unserialize($cached);
             } else {
                 $config['credentials'] = $credentials;
-                $stsClient = new StsClient($config);
+                
+                // Use STS endpoint for UpCloud if custom endpoint is provided
+                $stsConfig = $config;
+                if (!empty($endpoint)) {
+                    // Replace the S3 endpoint with STS endpoint for UpCloud
+                    $stsConfig['endpoint'] = str_replace(
+                        ['upcloudobjects.com', ':443'],
+                        ['upcloudobjects.com:4443/sts', ''],
+                        $endpoint
+                    );
+                }
+                
+                $stsClient = new StsClient($stsConfig);
                 $result = $stsClient->getSessionToken(['DurationSeconds' => static::CACHE_DURATION_SECONDS]);
                 $credentials = $stsClient->createCredentials($result);
                 $cacheDuration = $credentials->getExpiration() - time();
