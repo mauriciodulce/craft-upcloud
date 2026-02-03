@@ -167,16 +167,15 @@ UpCloud Managed Object Storage is fully S3-compatible and supports:
 
 UpCloud Object Storage is available in the following regions:
 
-- **Europe:**
-  - `europe-1` (Helsinki, Finland)
-  - `europe-2` (Frankfurt, Germany)
-  - `europe-3` (Stockholm, Sweden)
-  
-- **United States:**
-  - `us-1` (Chicago, Illinois)
-  
-- **Asia-Pacific:**
-  - `apac-1` (Singapore)
+| Region     | Primary Zone | Accessible Zones (via SDN private networks) |
+|------------|-------------|---------------------------------------------|
+| `apac-1`   | `sg-sin1`   | au-syd1, sg-sin1 |
+| `europe-1` | `fi-hel2`   | de-fra1, dk-cph1, es-mad1, fi-hel1, fi-hel2, nl-ams1, no-svg1, pl-waw1, se-sto1, uk-lon1 |
+| `europe-2` | `de-fra1`   | de-fra1, dk-cph1, es-mad1, fi-hel1, fi-hel2, nl-ams1, no-svg1, pl-waw1, se-sto1, uk-lon1 |
+| `europe-3` | `se-sto1`   | de-fra1, dk-cph1, es-mad1, fi-hel1, fi-hel2, nl-ams1, no-svg1, pl-waw1, se-sto1, uk-lon1 |
+| `us-1`     | `us-chi1`   | us-chi1, us-nyc1, us-sjo1 |
+
+> **Note:** For the plugin configuration, use `us-east-1` as the region value for S3 API compatibility. The actual UpCloud region is determined by your Object Storage instance endpoint.
 
 ## Differences from AWS S3
 
