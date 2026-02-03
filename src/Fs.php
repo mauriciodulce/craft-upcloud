@@ -381,29 +381,23 @@ class Fs extends FlysystemFs
             $tokenKey = static::CACHE_KEY_PREFIX . md5($keyId . $secret);
             $credentials = new Credentials($keyId, $secret);
 
-            if (Craft::$app->cache->exists($tokenKey) && !$refreshToken) {
-                $cached = Craft::$app->cache->get($tokenKey);
-                $credentials->unserialize($cached);
-            } else {
-                $config['credentials'] = $credentials;
-                
-                // Use STS endpoint for UpCloud if custom endpoint is provided
-                $stsConfig = $config;
-                if (!empty($endpoint)) {
-                    // Append :4443/sts to the S3 endpoint for UpCloud
-                    // This works for any UpCloud endpoint (e.g., https://xxxxx.upcloudobjects.com)
-                    $stsConfig['endpoint'] = rtrim($endpoint, '/') . ':4443/sts';
+            // Don't use STS for custom endpoints (e.g., UpCloud doesn't support STS)
+            if (empty($endpoint)) {
+                if (Craft::$app->cache->exists($tokenKey) && !$refreshToken) {
+                    $cached = Craft::$app->cache->get($tokenKey);
+                    $credentials->unserialize($cached);
+                } else {
+                    $config['credentials'] = $credentials;
+                    $stsClient = new StsClient($config);
+                    $result = $stsClient->getSessionToken(['DurationSeconds' => static::CACHE_DURATION_SECONDS]);
+                    $credentials = $stsClient->createCredentials($result);
+                    $cacheDuration = $credentials->getExpiration() - time();
+                    $cacheDuration = $cacheDuration > 0 ? $cacheDuration : static::CACHE_DURATION_SECONDS;
+                    Craft::$app->cache->set($tokenKey, $credentials->serialize(), $cacheDuration);
                 }
-                
-                $stsClient = new StsClient($stsConfig);
-                $result = $stsClient->getSessionToken(['DurationSeconds' => static::CACHE_DURATION_SECONDS]);
-                $credentials = $stsClient->createCredentials($result);
-                $cacheDuration = $credentials->getExpiration() - time();
-                $cacheDuration = $cacheDuration > 0 ? $cacheDuration : static::CACHE_DURATION_SECONDS;
-                Craft::$app->cache->set($tokenKey, $credentials->serialize(), $cacheDuration);
             }
 
-            // TODO Add support for different credential supply methods
+            // Use direct credentials for custom endpoints
             $config['credentials'] = $credentials;
         }
 
