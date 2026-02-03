@@ -1,0 +1,63 @@
+{
+  "name": "dulce/upcloud",
+  "description": "UpCloud Managed Object Storage integration for Craft CMS",
+  "type": "craft-plugin",
+  "keywords": [
+    "upcloud",
+    "cms",
+    "craftcms",
+    "flysystem",
+    "s3",
+    "object-storage",
+    "yii2"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mauricio Dulce",
+      "homepage": "https://github.com/dulce"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/dulce/craft-aws-s3/issues?state=open",
+    "source": "https://github.com/dulce/craft-aws-s3",
+    "docs": "https://github.com/dulce/craft-aws-s3/blob/master/README.md"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8.0.2",
+    "craftcms/cms": "^4.0.0-beta.1|^5.0.0-beta.1",
+    "craftcms/flysystem": "^1.0.0-beta.2|^2.0.0",
+    "league/flysystem-aws-s3-v3": "^3.0.0"
+  },
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main",
+    "craftcms/rector": "dev-main"
+  },
+  "autoload": {
+    "psr-4": {
+      "dulce\\upcloud\\": "src/"
+    }
+  },
+  "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G"
+  },
+  "extra": {
+    "name": "UpCloud Object Storage",
+    "handle": "upcloud",
+    "documentationUrl": "https://github.com/dulce/craft-aws-s3/blob/master/README.md"
+  },
+  "config": {
+    "platform": {
+      "php": "8.0.2"
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  }
+}

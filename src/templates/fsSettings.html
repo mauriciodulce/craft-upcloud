@@ -1,0 +1,161 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.autosuggestField({
+    label: "UpCloud Endpoint"|t('upcloud'),
+    id: 'endpoint',
+    name: 'endpoint',
+    suggestEnvVars: true,
+    value: fs.endpoint,
+    errors: fs.getErrors('endpoint'),
+    class: 'upcloud-endpoint',
+    required: true,
+    instructions: 'Your UpCloud Object Storage endpoint (e.g., https://abc123.upcloudobjects.com)'|t('upcloud'),
+    placeholder: 'https://your-id.upcloudobjects.com'
+}) }}
+
+{{ forms.autosuggestField({
+    label: "Access Key ID"|t('upcloud'),
+    id: 'keyId',
+    name: 'keyId',
+    suggestEnvVars: true,
+    value: fs.keyId,
+    errors: fs.getErrors('keyId'),
+    class: 's3-key-id',
+    instructions: 'Your UpCloud Object Storage Access Key'|t('upcloud')
+}) }}
+
+{{ forms.autosuggestField({
+    label: "Secret Access Key"|t('upcloud'),
+    id: 'secret',
+    name: 'secret',
+    suggestEnvVars: true,
+    value: fs.secret,
+    errors: fs.getErrors('secret'),
+    class: 's3-secret-key',
+    instructions: 'Your UpCloud Object Storage Secret Key'|t('upcloud')
+}) }}
+
+{% set bucketInput %}
+    <div class="flex fullwidth">
+        {{ forms.select({
+            name: 'bucketSelectionMode',
+            options: [
+                { label: 'Choose…'|t('upcloud'), value: 'choose' },
+                { label: 'Manual…'|t('upcloud'), value: 'manual' }
+            ],
+            value: fs.bucketSelectionMode,
+            toggle: true,
+            targetPrefix: '.bsm-'
+        }) }}
+
+        <div class="bsm-choose{% if fs.bucketSelectionMode == 'manual' %} hidden{% endif %}">
+            {{ forms.select({
+                id: 'bucket',
+                name: 'bucket',
+                options: { (fs.bucket): fs.bucket },
+                value: fs.bucketSelectionMode == 'manual' ? fs.bucket,
+                readonly: true,
+                class: 's3-bucket-select'
+            }) }}
+        </div>
+        <div class="bsm-choose{% if fs.bucketSelectionMode == 'manual' %} hidden{% endif %}">
+            <div class="btn s3-refresh-buckets">{{ "Refresh"|t('upcloud') }}</div>
+        </div>
+        <div class="bsm-choose{% if fs.bucketSelectionMode == 'manual' %} hidden{% endif %}">
+            <div class="spinner hidden"></div>
+        </div>
+
+        <div class="bsm-manual{% if fs.bucketSelectionMode == 'choose' %} hidden{% endif %} flex-grow">
+            {{ forms.autosuggest({
+                label: "Bucket"|t('upcloud'),
+                class: 'ltr s3-manualBucket',
+                name: 'manualBucket',
+                suggestEnvVars: true,
+                value: fs.bucket,
+                placeholder: 'Bucket'|t('upcloud')
+            }) }}
+        </div>
+        <div class="bsm-manual{% if fs.bucketSelectionMode == 'choose' %} hidden{% endif %} flex-grow">
+            {{ forms.autosuggest({
+                label: "Region"|t('upcloud'),
+                class: 'ltr s3-manualRegion',
+                name: 'manualRegion',
+                suggestEnvVars: true,
+                value: fs.region,
+                placeholder: 'us-east-1'|t('upcloud')
+            }) }}
+        </div>
+    </div>
+
+    <input type="hidden" name="region" class="s3-region" value="{{ fs.region }}" />
+{% endset %}
+
+
+{{ forms.field({
+    label: "Bucket"|t('upcloud'),
+    id: 'bucket',
+    required: true,
+    errors: fs.getErrors('bucket'),
+}, bucketInput) }}
+
+{{ forms.autosuggestField({
+    label: "Subfolder"|t('upcloud'),
+    instructions: "If you want to use a bucket's subfolder as a filesystem, specify the path to use here."|t('upcloud'),
+    id: 'subfolder',
+    class: 'ltr',
+    name: 'subfolder',
+    suggestEnvVars: true,
+    value: fs.subfolder,
+    errors: fs.getErrors('subfolder'),
+    placeholder: "path/to/subfolder"|t('upcloud')
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Add the subfolder to the Base URL?"|t('upcloud'),
+    instructions: "Turn this on if you want to add the specified subfolder to the Base URL."|t('upcloud'),
+    name: 'addSubfolderToRootUrl',
+    on: fs.addSubfolderToRootUrl,
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Make Uploads Public"|t('upcloud'),
+    instructions: "Sets the ACL for uploaded objects.",
+    id: 'makeUploadsPublic',
+    name: 'makeUploadsPublic',
+    on: fs.makeUploadsPublic
+}) }}
+
+<hr />
+{% set cacheInput %}
+    {% set expires = (fs.expires|length > 0 ? fs.expires|split(' ') : ['', ''])%}
+
+    <div class="flex">
+        <div>
+            {{ forms.text({
+                id: 'expiresAmount',
+                value: expires[0],
+                size: 2,
+                class: 's3-expires-amount'
+            }) }}
+        </div>
+        {{ forms.select({
+            id: 'expiresPeriod',
+            options: periods,
+            value: expires[1],
+            class: 's3-expires-period'
+        }) }}
+    </div>
+    {{ forms.hidden({
+        name: "expires",
+        value: fs.expires,
+        class: "expires-combined"
+    }) }}
+{% endset %}
+
+{{ forms.field({
+    label: "Cache Duration"|t,
+    instructions: "The Cache-Control duration that assets should be uploaded to UpCloud with.",
+    id: 'cacheDuration',
+}, cacheInput) }}
+
+{% do view.registerAssetBundle("dulce\\upcloud\\AwsS3Bundle") %}
