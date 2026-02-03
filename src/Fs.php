@@ -355,6 +355,7 @@ class Fs extends FlysystemFs
         if (!empty($endpoint)) {
             $config['endpoint'] = $endpoint;
             $config['use_path_style_endpoint'] = true;
+            $config['signature_version'] = 'v4';
         }
 
         $client = Craft::createGuzzleClient();
