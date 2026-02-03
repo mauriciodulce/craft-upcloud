@@ -19,9 +19,9 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/dulce/craft-aws-s3/issues?state=open",
-    "source": "https://github.com/dulce/craft-aws-s3",
-    "docs": "https://github.com/dulce/craft-aws-s3/blob/master/README.md"
+    "issues": "https://github.com/mauriciodulce/craft-upcloud/issues?state=open",
+    "source": "https://github.com/mauriciodulce/craft-upcloud",
+    "docs": "https://github.com/mauriciodulce/craft-upcloud/blob/master/README.md"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -49,7 +49,7 @@
   "extra": {
     "name": "UpCloud Object Storage",
     "handle": "upcloud",
-    "documentationUrl": "https://github.com/dulce/craft-aws-s3/blob/master/README.md"
+    "documentationUrl": "https://github.com/mauriciodulce/craft-upcloud/blob/master/README.md"
   },
   "config": {
     "platform": {

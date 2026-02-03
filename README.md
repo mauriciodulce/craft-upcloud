@@ -233,6 +233,6 @@ This plugin is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for 
 
 ## Support
 
-For issues and questions about this plugin, please open an issue on [GitHub](https://github.com/dulce/craft-aws-s3/issues).
+For issues and questions about this plugin, please open an issue on [GitHub](https://github.com/mauriciodulce/craft-upcloud/issues).
 
 For UpCloud Object Storage support, contact [UpCloud Support](https://upcloud.com/support/).
