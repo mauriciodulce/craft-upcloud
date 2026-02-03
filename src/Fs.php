@@ -183,7 +183,7 @@ class Fs extends FlysystemFs
      */
     public function getSettingsHtml(): ?string
     {
-        return Craft::$app->getView()->renderTemplate('fsSettings', [
+        return Craft::$app->getView()->renderTemplate('upcloud/fsSettings', [
             'fs' => $this,
             'periods' => array_merge(['' => ''], Assets::periodList()),
         ]);
