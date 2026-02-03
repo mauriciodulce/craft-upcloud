@@ -221,6 +221,10 @@ Make sure your Base URL is configured correctly in the filesystem settings.
 - [Getting Started with UpCloud Object Storage](https://upcloud.com/docs/guides/get-started-managed-object-storage/)
 - [Craft CMS Filesystem Documentation](https://craftcms.com/docs/4.x/assets.html)
 
+## Get Started with UpCloud
+
+Don't have an UpCloud account yet? [Sign up here](https://signup.upcloud.com/?promo=5H4SQS) and get **$25 in free credits** to try UpCloud Object Storage and other cloud services.
+
 ## License
 
 This plugin is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
