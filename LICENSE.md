@@ -1,4 +1,6 @@
-Copyright (c) Pixel & Tonic, Inc.
+Copyright (c) 2026 Mauricio Dulce
+
+Based on craftcms/aws-s3 by Pixel & Tonic, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

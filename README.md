@@ -132,19 +132,6 @@ For sensitive files (medical records, documents, etc.), you should:
 
 Signed URLs automatically expire for security. Users can access the file during the expiration window without making it permanently public.
 
-### Example Configuration
-
-```php
-// config/upcloud.php
-return [
-    'endpoint' => getenv('UPCLOUD_ENDPOINT'),
-    'keyId' => getenv('UPCLOUD_ACCESS_KEY'),
-    'secret' => getenv('UPCLOUD_SECRET_KEY'),
-    'bucket' => getenv('UPCLOUD_BUCKET'),
-    'region' => 'us-east-1',
-];
-```
-
 ### Environment Variables (.env)
 
 ```env
@@ -153,6 +140,13 @@ UPCLOUD_ACCESS_KEY="your-access-key-id"
 UPCLOUD_SECRET_KEY="your-secret-access-key"
 UPCLOUD_BUCKET="your-bucket-name"
 ```
+
+Then in your filesystem settings (Settings > Filesystems):
+- **Endpoint**: `$UPCLOUD_ENDPOINT`
+- **Access Key ID**: `$UPCLOUD_ACCESS_KEY`
+- **Secret Access Key**: `$UPCLOUD_SECRET_KEY`
+- **Bucket**: `$UPCLOUD_BUCKET`
+- **Region**: Leave as `us-east-1` (used for S3 API compatibility, actual region doesn't matter for UpCloud)
 
 ## UpCloud Object Storage Features
 
