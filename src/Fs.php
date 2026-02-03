@@ -390,12 +390,9 @@ class Fs extends FlysystemFs
                 // Use STS endpoint for UpCloud if custom endpoint is provided
                 $stsConfig = $config;
                 if (!empty($endpoint)) {
-                    // Replace the S3 endpoint with STS endpoint for UpCloud
-                    $stsConfig['endpoint'] = str_replace(
-                        ['upcloudobjects.com', ':443'],
-                        ['upcloudobjects.com:4443/sts', ''],
-                        $endpoint
-                    );
+                    // Append :4443/sts to the S3 endpoint for UpCloud
+                    // This works for any UpCloud endpoint (e.g., https://xxxxx.upcloudobjects.com)
+                    $stsConfig['endpoint'] = rtrim($endpoint, '/') . ':4443/sts';
                 }
                 
                 $stsClient = new StsClient($stsConfig);
