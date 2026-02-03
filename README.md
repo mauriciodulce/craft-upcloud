@@ -59,7 +59,78 @@ To create a new UpCloud Object Storage filesystem to use with your volumes, visi
   
 - **Region**: Usually `us-east-1` (UpCloud uses this for S3 API compatibility)
 
+- **Make Uploads Public** (optional): When enabled, uploaded files will have public-read ACL
+  - Turn OFF for private files (recommended for sensitive data like medical records)
+  - Required permission: `s3:PutObjectAcl` in your bucket policy
+
 > 💡 **Tip:** All configuration values support environment variables. See [Environmental Configuration](https://craftcms.com/docs/4.x/config/#environmental-configuration) in the Craft docs to learn more.
+
+## Private Files & Signed URLs
+
+For sensitive files (medical records, documents, etc.), you should:
+
+1. **Disable "Make Uploads Public"** in your filesystem settings
+2. **Add required permissions** to your UpCloud bucket policy:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": [
+        "arn:aws:s3:::your-bucket-name"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:PutObjectAcl",
+        "s3:DeleteObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::your-bucket-name/*"
+      ],
+      "Effect": "Allow"
+    }
+  ]
+}
+```
+
+3. **Use signed URLs in your templates** for temporary access:
+
+```twig
+{# Display PDF inline with signed URL (expires in ~1 hour) #}
+<iframe 
+  src="{{ asset.getUrl({
+    ResponseContentDisposition: 'inline; filename="' ~ asset.filename ~ '"',
+    ResponseContentType: 'application/pdf'
+  }) }}" 
+  width="100%" 
+  height="800px">
+</iframe>
+
+{# Or open in new tab #}
+<a href="{{ asset.getUrl({
+  ResponseContentDisposition: 'inline'
+}) }}" target="_blank">
+  View Document
+</a>
+
+{# Download with custom filename #}
+<a href="{{ asset.getUrl({
+  ResponseContentDisposition: 'attachment; filename="Patient-Record.pdf"'
+}) }}" download>
+  Download Record
+</a>
+```
+
+Signed URLs automatically expire for security. Users can access the file during the expiration window without making it permanently public.
 
 ### Example Configuration
 

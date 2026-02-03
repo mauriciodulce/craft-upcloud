@@ -265,12 +265,18 @@ class Fs extends FlysystemFs
     protected function createAdapter(): FilesystemAdapter
     {
         $client = static::client($this->_getConfigArray(), $this->_getCredentials());
-        $options = [
-
-            // This is the S3 default for all objects, but explicitly
-            // sending the header allows for bucket policies that require it.
-            // @see https://github.com/craftcms/aws-s3/pull/172
-            'ServerSideEncryption' => 'AES256',
+        
+        // UpCloud doesn't support ServerSideEncryption header
+        $options = [];
+        $forwardedOptions = [
+            'ACL',
+            'Metadata',
+            'ContentType',
+            'CacheControl',
+            'ContentDisposition',
+            'ContentEncoding',
+            'ContentLanguage',
+            'Expires'
         ];
 
         return new AwsS3V3Adapter(
@@ -281,6 +287,7 @@ class Fs extends FlysystemFs
             null,
             $options,
             false,
+            $forwardedOptions,
         );
     }
 
@@ -356,6 +363,8 @@ class Fs extends FlysystemFs
             $config['endpoint'] = $endpoint;
             $config['use_path_style_endpoint'] = true;
             $config['signature_version'] = 'v4';
+            $config['request_checksum_calculation'] = 'when_required';
+            $config['response_checksum_validation'] = 'when_required';
         }
 
         $client = Craft::createGuzzleClient();
@@ -379,11 +388,17 @@ class Fs extends FlysystemFs
             }
             // If that didn't happen, assume we're running on EC2 and we have an IAM role assigned so no action required.
         } else {
-            $tokenKey = static::CACHE_KEY_PREFIX . md5($keyId . $secret);
-            $credentials = new Credentials($keyId, $secret);
+            // For custom endpoints (UpCloud), use direct credentials array
+            if (!empty($endpoint)) {
+                $config['credentials'] = [
+                    'key' => $keyId,
+                    'secret' => $secret,
+                ];
+            } else {
+                // For AWS, use STS for temporary credentials
+                $tokenKey = static::CACHE_KEY_PREFIX . md5($keyId . $secret);
+                $credentials = new Credentials($keyId, $secret);
 
-            // Don't use STS for custom endpoints (e.g., UpCloud doesn't support STS)
-            if (empty($endpoint)) {
                 if (Craft::$app->cache->exists($tokenKey) && !$refreshToken) {
                     $cached = Craft::$app->cache->get($tokenKey);
                     $credentials->unserialize($cached);
@@ -396,10 +411,9 @@ class Fs extends FlysystemFs
                     $cacheDuration = $cacheDuration > 0 ? $cacheDuration : static::CACHE_DURATION_SECONDS;
                     Craft::$app->cache->set($tokenKey, $credentials->serialize(), $cacheDuration);
                 }
+                
+                $config['credentials'] = $credentials;
             }
-
-            // Use direct credentials for custom endpoints
-            $config['credentials'] = $credentials;
         }
 
         return $config;
