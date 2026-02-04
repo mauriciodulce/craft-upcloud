@@ -160,8 +160,8 @@ UpCloud Managed Object Storage is fully S3-compatible and supports:
 - ✅ Object versioning
 - ✅ Lifecycle management
 - ✅ CORS configuration
-- ✅ Presigned URLs
-- ✅ Virtual-hosted-style bucket URLs
+- ✅ Presigned URLs (signed URLs with expiration)
+- ✅ Path-style and virtual-hosted-style bucket URLs
 
 ### Available Regions
 
@@ -207,10 +207,9 @@ Check that:
 
 ### URL generation issues
 
-UpCloud uses virtual-hosted-style URLs in the format:
-```
-https://[bucket-name].[endpoint-host]/[object-key]
-```
+UpCloud supports both URL formats:
+- **Path-style** (used by this plugin): `https://endpoint.com/bucket/object`
+- **Virtual-hosted-style**: `https://bucket.endpoint.com/object`
 
 Make sure your Base URL is configured correctly in the filesystem settings.
 
