@@ -238,4 +238,7 @@ This plugin is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for 
 
 For issues and questions about this plugin, please open an issue on [GitHub](https://github.com/mauriciodulce/craft-upcloud/issues).
 
+
+**New to UpCloud?** [Sign up here](https://signup.upcloud.com/?promo=5H4SQS) and get **$25 in free credits** to get started with UpCloud Object Storage!
+
 For UpCloud Object Storage support, contact [UpCloud Support](https://upcloud.com/support/).
