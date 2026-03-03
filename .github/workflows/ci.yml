@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ecs:
+    name: ECS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: 'ctype,curl,dom,iconv,intl,json,mbstring,openssl,pcre,pdo,reflection,spl,zip'
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-ansi --no-progress
+
+      - name: Run ECS
+        run: vendor/bin/ecs check --ansi
+
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: 'ctype,curl,dom,iconv,intl,json,mbstring,openssl,pcre,pdo,reflection,spl,zip'
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-ansi --no-progress
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan --memory-limit=1G
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Prettier
+        run: npx prettier --check .
