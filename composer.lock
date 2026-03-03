@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da586d2721af0016cbcb563d7d3671b1",
+    "content-hash": "4fe8002c42e9dea8d88d56701d2f05ad",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1031,16 +1031,16 @@
         },
         {
             "name": "craftcms/flysystem",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/craftcms/flysystem.git",
-                "reference": "2cb782bf4dc8164886c84973bccad5609c4fa212"
+                "reference": "04ad4b85a04d4c660b33ee8859e3db0cee6c3c85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/flysystem/zipball/2cb782bf4dc8164886c84973bccad5609c4fa212",
-                "reference": "2cb782bf4dc8164886c84973bccad5609c4fa212",
+                "url": "https://api.github.com/repos/craftcms/flysystem/zipball/04ad4b85a04d4c660b33ee8859e3db0cee6c3c85",
+                "reference": "04ad4b85a04d4c660b33ee8859e3db0cee6c3c85",
                 "shasum": ""
             },
             "require": {
@@ -1082,7 +1082,7 @@
                 "rss": "https://github.com/craftcms/flysystem/commits/master.atom",
                 "source": "https://github.com/craftcms/flysystem"
             },
-            "time": "2024-01-17T17:12:23+00:00"
+            "time": "2024-03-22T18:38:04+00:00"
         },
         {
             "name": "craftcms/plugin-installer",
@@ -7559,9 +7559,9 @@
     "platform": {
         "php": "^8.0.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.0.2"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.9.0"
 }
