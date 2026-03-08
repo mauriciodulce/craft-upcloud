@@ -2,7 +2,7 @@
   "name": "@craftcms/aws-s3",
   "private": true,
   "devDependencies": {
-    "husky": "^7.0.4",
+    "husky": "^9.0.0",
     "lint-staged": "^12.4.0",
     "prettier": "^2.7.1"
   },
