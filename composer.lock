@@ -755,20 +755,20 @@
         },
         {
             "name": "craftcms/flysystem",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/craftcms/flysystem.git",
-                "reference": "db27fc34ec50239c4634533efba6fbb07c040060"
+                "reference": "9aa592f19110597be87b6e17cbc46f042f2063e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/flysystem/zipball/db27fc34ec50239c4634533efba6fbb07c040060",
-                "reference": "db27fc34ec50239c4634533efba6fbb07c040060",
+                "url": "https://api.github.com/repos/craftcms/flysystem/zipball/9aa592f19110597be87b6e17cbc46f042f2063e6",
+                "reference": "9aa592f19110597be87b6e17cbc46f042f2063e6",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^5.0.0-alpha.6",
+                "craftcms/cms": "^5.0.0-alpha.6|^6.0.0-alpha.1",
                 "league/flysystem": "^3.0.0",
                 "php": "^8.2"
             },
@@ -806,7 +806,8 @@
                 "rss": "https://github.com/craftcms/flysystem/commits/master.atom",
                 "source": "https://github.com/craftcms/flysystem"
             },
-            "time": "2024-03-22T18:41:28+00:00"
+            "time": "2026-11-08T09:07:32+00:00",
+            "published-time": "2026-11-08T09:08:02+00:00"
         },
         {
             "name": "craftcms/plugin-installer",
@@ -2107,16 +2108,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.32.0",
+            "version": "3.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "254b1595b16b22dbddaaef9ed6ca9fdac4956725"
+                "reference": "f7fb152932f30072d573510cbd4dd657d6475b25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/254b1595b16b22dbddaaef9ed6ca9fdac4956725",
-                "reference": "254b1595b16b22dbddaaef9ed6ca9fdac4956725",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f7fb152932f30072d573510cbd4dd657d6475b25",
+                "reference": "f7fb152932f30072d573510cbd4dd657d6475b25",
                 "shasum": ""
             },
             "require": {
@@ -2184,9 +2185,10 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.32.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.36.0"
             },
-            "time": "2026-02-25T17:01:41+00:00"
+            "time": "2026-09-02T08:00:27+00:00",
+            "published-time": "2026-09-02T08:01:40+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
@@ -2290,7 +2292,8 @@
             "support": {
                 "source": "https://github.com/thephpleague/flysystem-local/tree/3.31.0"
             },
-            "time": "2026-01-23T15:30:45+00:00"
+            "time": "2026-01-23T15:30:45+00:00",
+            "published-time": "2026-01-23T15:44:38+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -2346,7 +2349,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-21T08:32:55+00:00"
+            "time": "2024-09-21T08:32:55+00:00",
+            "published-time": "2024-09-21T09:06:40+00:00"
         },
         {
             "name": "league/uri",
@@ -8489,5 +8493,5 @@
         "php": "^8.1.0"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
